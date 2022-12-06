@@ -18,10 +18,16 @@ const App = () => {
   useEffect(onLoadEffect, []);
 
   const closeModal = () => {
-    axios.post('https://api.pmcaus.com/api/shopify/callrequest', {
-      firstName: {name},
-      lastName: {phone}
-    })
+    axios.post('https://hgw.sirzanty.com/api/Shopify/CallRequest', {
+      name: {name}.name,
+      phone: {phone}.phone
+    },
+    {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
       .then(function(response) {
         console.log(response);
       })
@@ -37,10 +43,8 @@ const App = () => {
   return (
     <div id="main-popup">
       <div id="header">
-        <img src="https://raw.githubusercontent.com/SirZanty/audio/main/tasksupply.png" />
-        <div id="exit">
-          <button id="exit-button" onClick={() => closeModal()}></button>
-        </div>
+        <img src="https://raw.githubusercontent.com/SirZanty/audio/main/tasksupply.png"/>
+        <img id="exit" src="https://icon-icons.com/downloadimage.php?id=221144&root=3522/PNG/32/&file=logout_exit_icon_221144.png" onClick={()=>{setModalStatus(false)}}></img>
       </div>
       <div id="main">
         <InputText placeholder="Full Name" id="name" name="name" onChange={(e) => setName(e.target.value)}  />

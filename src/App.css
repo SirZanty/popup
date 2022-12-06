@@ -8,20 +8,18 @@
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
 }
-#exit{
-  position: fixed;
-  height: 26px;
-  width: 26px;
-  top: 5%;
-  left: 87%;
-  transform: translateY(-5%) translateX(87%);
-}
-#exit-button{
-  height: 25px;
-  width: 25px;
-  border: none;
-  cursor: pointer;
-  background-image: url('https://icons.iconarchive.com/icons/iconsmind/outline/24/Close-icon.png');
+#exit {
+	 margin: 0;
+	 padding: 0;
+	 border: 0;
+	 background: none;
+	 position: fixed;
+	 width: 26px;
+	 height: 26px;
+   top: 5%;
+   left: 87%;
+   transform: translateY(-5%) translateX(87%);
+   cursor: pointer;
 }
 #header{
   cursor: not-allowed;
