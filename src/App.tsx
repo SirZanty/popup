@@ -49,7 +49,7 @@ const App = () => {
       <div id="main">
         <InputText placeholder="Full Name" id="name" name="name" onChange={(e) => setName(e.target.value)}  />
         <InputMask mask="(999)999-9999" id="phone" placeholder="Enter your phone" onChange={(e) => setPhone(e.target.value)}></InputMask>
-        <Button onClick={() => closeModal()} id="button" label="Call me!" />
+        <Button onClick={() => closeModal()} id="button" label="Call me! -15%"/>
       </div>
     </div>
   );
