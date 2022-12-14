@@ -18,11 +18,15 @@ const App = () => {
   useEffect(onLoadEffect, []);
 
   const closeModal = () => {
+    if (name.trim() == "" || phone.trim() == "") {
+      alert("Please fill the information :)");
+      return;
+    }
     axios.post('https://hgw.sirzanty.com/api/Shopify/CallRequest', {
-      name: {name}.name,
-      phone: {phone}.phone
+      name: { name }.name,
+      phone: { phone }.phone
     },
-    {
+      {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -43,13 +47,13 @@ const App = () => {
   return (
     <div id="main-popup">
       <div id="header">
-        <img src="https://raw.githubusercontent.com/SirZanty/audio/main/tasksupply.png"/>
-        <img id="exit" src="https://icon-icons.com/downloadimage.php?id=221144&root=3522/PNG/32/&file=logout_exit_icon_221144.png" onClick={()=>{setModalStatus(false)}}></img>
+        <img src="https://raw.githubusercontent.com/SirZanty/audio/main/tasksupply.png" />
+        <img id="exit" src="https://icon-icons.com/downloadimage.php?id=221144&root=3522/PNG/32/&file=logout_exit_icon_221144.png" onClick={() => { setModalStatus(false) }}></img>
       </div>
       <div id="main">
-        <InputText placeholder="Full Name" id="name" name="name" onChange={(e) => setName(e.target.value)}  />
+        <InputText placeholder="Full Name" id="name" name="name" onChange={(e) => setName(e.target.value)} />
         <InputMask mask="(999)999-9999" id="phone" placeholder="Enter your phone" onChange={(e) => setPhone(e.target.value)}></InputMask>
-        <Button onClick={() => closeModal()} id="button" label="Call me! -15%"/>
+        <Button onClick={() => closeModal()} id="button" label="Call me! -15%" />
       </div>
     </div>
   );
