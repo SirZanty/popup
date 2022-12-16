@@ -4,11 +4,11 @@ import { InputMask } from 'primereact/inputmask';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import axios from 'axios';
+import { useFormik } from 'formik';
+import { classNames } from 'primereact/utils';
 
 const App = () => {
   const [showModal, setModalStatus] = useState(false);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
 
   const onLoadEffect = () => {
     setTimeout(() => {
@@ -17,14 +17,14 @@ const App = () => {
   };
   useEffect(onLoadEffect, []);
 
-  const closeModal = () => {
-    if (name.trim() == "" || phone.trim() == "") {
+  const closeModal = (nameI,phoneI) => {
+    if (nameI.trim() == "" || phoneI.trim() == "") {
       alert("Please fill the information :)");
       return;
     }
     axios.post('https://hgw.sirzanty.com/api/Shopify/CallRequest', {
-      name: { name }.name,
-      phone: { phone }.phone
+      name: nameI,
+      phone: phoneI
     },
       {
         headers: {
@@ -40,6 +40,35 @@ const App = () => {
       });
     setModalStatus(false);
   }
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      phone: ""
+    },
+    validate: (data) => {
+      let errors:any = {};
+
+      if (data.name==="") {
+        errors.name = 'Name is required.';
+      }
+
+      if (data.phone==="") {
+        errors.phone = 'Phone is required.';
+      }
+
+      return errors;
+    },
+    onSubmit: (data) => {
+      closeModal(data.name,data.phone);
+      formik.resetForm();
+    }
+  });
+
+  const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
+  const getFormErrorMessage = (name) => {
+    return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
+  };
+
 
   if (!showModal) {
     return <div></div>
@@ -51,11 +80,15 @@ const App = () => {
         <img id="exit" src="https://icon-icons.com/downloadimage.php?id=221144&root=3522/PNG/32/&file=logout_exit_icon_221144.png" onClick={() => { setModalStatus(false) }}></img>
       </div>
       <div id="main">
-        <InputText placeholder="Full Name" id="name" name="name" onChange={(e) => setName(e.target.value)} />
-        <InputMask mask="(999)999-9999" id="phone" placeholder="Enter your phone" onChange={(e) => setPhone(e.target.value)}></InputMask>
-        <Button onClick={() => closeModal()} id="button" label="Call me! -15%" />
+        <form onSubmit={formik.handleSubmit}>
+          <InputText placeholder="Full Name" id="name" name="name" value={formik.values.name} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('name') })} />
+          {getFormErrorMessage('name')}
+          <InputMask id="phone" name="phone" placeholder="Enter your phone" mask="(999)999-9999" value={formik.values.name} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('phone') })}></InputMask>
+          {getFormErrorMessage("phone")}
+          <Button id="button" type="submit" label="Call me! -15%" />
+        </form>
       </div>
-    </div>
+    </div >
   );
 }
 export default App;
