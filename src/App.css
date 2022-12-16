@@ -65,10 +65,3 @@
 #button:hover{
   background-color: #0088ff;
 }
-input.error{
-  border-color: red;
-}
-.input-feedback {
-  color: red;
-  margin-top: .25rem;
-}

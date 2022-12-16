@@ -81,9 +81,11 @@ const App = () => {
       </div>
       <div id="main">
         <form onSubmit={formik.handleSubmit}>
-          <InputText placeholder="Full Name" id="name" name="name" value={formik.values.name} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('name') })} />
+          <InputText placeholder="Full Name" id="name" name="name" value={formik.values.name}
+          onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('name') })} />
           {getFormErrorMessage('name')}
-          <InputMask id="phone" name="phone" placeholder="Enter your phone" mask="(999)999-9999" value={formik.values.name} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('phone') })}></InputMask>
+          <InputMask id="phone" name="phone" placeholder="Enter your phone" mask="(999)999-9999" value={formik.values.name}
+          onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('phone') })}></InputMask>
           {getFormErrorMessage("phone")}
           <Button id="button" type="submit" label="Call me! -15%" />
         </form>
