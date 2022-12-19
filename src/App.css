@@ -6,7 +6,19 @@
   background-color: white;
   top: 50%;
   left: 50%;
+  animation: rotation 2s linear;
   transform: translateY(-50%) translateX(-50%);
+}
+#main-popup:hover{
+  border: 3px solid #215fd1;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) translateX(-50%);
+  }
 }
 #exit {
 	 margin: 0;
@@ -21,10 +33,28 @@
    transform: translateY(-5%) translateX(87%);
    cursor: pointer;
 }
+#hat {
+	 margin: 0;
+	 padding: 0;
+	 border: 0;
+	 background: none;
+	 position: fixed;
+	 width: 150px;
+	 height: 150px;
+   transform: translateY(-42%) translateX(150%);
+   cursor: pointer;
+}
+#hat:hover{
+  height: 160px;
+}
 #header{
   cursor: not-allowed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }
-#main{
+#main #formContaiener{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,7 +68,7 @@
   height: 100%;
   border-radius: 10px;
   border: 3px solid #215fd1;
-  width:90%;
+  width: 90%;
   color: #0e120f;
   font-size: 20px;
 }
@@ -60,8 +90,16 @@
   font-family: Arial;
   border-radius: 6px;
   height: 100%;
-  width: 97%;
+  width: 100%;
+  margin-top: 10px;
 }
 #button:hover{
   background-color: #0088ff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.p-error{
+  color: red;
+  font-size: medium;
+  font-weight: bold;
 }
