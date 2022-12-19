@@ -33,6 +33,30 @@
    transform: translateY(-5%) translateX(87%);
    cursor: pointer;
 }
+#wsiconcl {
+	 margin: 0;
+	 padding: 0;
+	 border: 0;
+	 background: none;
+	 position: fixed;
+	 width: 48px;
+	 height: 48px;
+   top: 90%;
+   left: 95%;
+   cursor: pointer;
+}
+#wsiconop {
+	 margin: 0;
+	 padding: 0;
+	 border: 0;
+	 background: none;
+	 position: fixed;
+	 width: 48px;
+	 height: 48px;
+   top: 88%;
+   left: 101%;
+   cursor: pointer;
+}
 #hat {
 	 margin: 0;
 	 padding: 0;
@@ -95,8 +119,11 @@
 }
 #button:hover{
   background-color: #0088ff;
-  font-weight: bold;
   cursor: pointer;
+}
+#button:disabled{
+  background-color: #8a8383;
+  cursor: not-allowed;
 }
 .p-error{
   color: red;
