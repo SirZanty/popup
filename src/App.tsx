@@ -13,7 +13,7 @@ const App = () => {
   const onLoadEffect = () => {
     setTimeout(() => {
       setModalStatus(true);
-    }, 1000);
+    }, 10000);
   };
   useEffect(onLoadEffect, []);
 
@@ -56,7 +56,7 @@ const App = () => {
   return (
     <div id="main-popup">
       <div id="header">
-        <img src="https://raw.githubusercontent.com/SirZanty/audio/main/tasksupply.png" />
+        <img id="logo" src="https://raw.githubusercontent.com/SirZanty/audio/main/tasksupply.png" />
         <img id="hat" src="https://raw.githubusercontent.com/SirZanty/audio/main/hat.png" />
         <img id="exit" src="https://icon-icons.com/downloadimage.php?id=221144&root=3522/PNG/32/&file=logout_exit_icon_221144.png" onClick={() => { setModalStatus(false) }}></img>
       </div>
@@ -66,7 +66,7 @@ const App = () => {
           {getFormErrorMessage(name)}
           <InputMask id="phone" name="phone" placeholder="Enter your phone" mask="(999)999-9999" value={phone} onChange={(e) => setPhone(e.target.value)}></InputMask>
           {getFormErrorMessage(phone)}
-          <Button id="button" onClick={closeModal} label="Call me -15%" disabled={name === "" || phone === ""} />
+          <Button id="button" onClick={closeModal} label="Get 15% Off" disabled={name === "" || phone === ""} />
         </div>
       </div>
       <img id="wsiconop" src="https://raw.githubusercontent.com/SirZanty/audio/main/ws.png" onClick={() => { wsContact() }} />
