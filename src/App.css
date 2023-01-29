@@ -2,7 +2,7 @@
   position: fixed;
   border: 1px solid #215fd1;
   border-radius: 20px;
-  z-index: 99999;
+  z-index: 99;
   background-color: white;
   top: 50%;
   left: 50%;
@@ -44,7 +44,7 @@
    bottom: 7px;
    right: 7px;
    cursor: pointer;
-   z-index: 9999;
+   z-index: 99;
 }
 #wsiconop {
 	 margin: 0;
@@ -133,4 +133,24 @@
   color: red;
   font-size: medium;
   font-weight: bold;
+}
+
+.p-dropdown-items-wrapper {
+  z-index: 100;
+  width: 250px;
+}
+
+.p-dropdown-item{
+  z-index: 100;
+  width: 600px;
+}
+
+.p-dropdown-items{
+  z-index: 100;
+  width: 350px;
+}
+
+.p-dropdown {
+  width: 90%;
+  border: 3px solid #215fd1 !important;
 }
