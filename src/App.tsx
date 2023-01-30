@@ -1,60 +1,71 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, MutableRefObject } from "react";
 import { InputMask } from "primereact/inputmask";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import { Tooltip } from "primereact/tooltip";
-import { Skeleton } from "primereact/skeleton";
 import axios from "axios";
 
 const App = () => {
   const [showModal, setModalStatus] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [selectedGroupedProduct, setSelectedGroupedProduct] = useState(null);
-  const [groupedProducts, setGroupedProducts] = useState(null);
-  const [lazyLoading, setLazyLoading] = useState(false);
-  const [lastEvent, setLastEvent] = useState(null);
-  let loadLazyTimeout = useRef(null);
-
-  const onLazyLoad = (event) => {
-    console.log("entra a lazy")
-    if(JSON.stringify(lastEvent)===JSON.stringify(event)){
-      return;
-    }
-    setLazyLoading(true);
-    setLastEvent(event);
-    if (loadLazyTimeout) {
-      clearTimeout(loadLazyTimeout);
-    }
-    loadLazyTimeout = setTimeout(()=>{
-      console.log("entra al axios");
-      axios
-      .get("http://127.0.0.1:5000/get-all-products-shopify")
-      .then(function (response) {
-        setGroupedProducts(response.data);
-        setLazyLoading(false)
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    },100);   
-    
-  };
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [Products, setProducts] = useState(null);
+  let exeAxiosFullProducts: MutableRefObject<boolean> = useRef(false);
+  let dateCache = useRef('');
+  let productsCache = useRef(null);
+  const url = "https://shobryl-api.sirzanty.com/";
 
   const onLoadEffect = () => {
     setTimeout(() => {
       setModalStatus(true);
-    }, 5000);
+    }, 15000);
   };
+
   useEffect(onLoadEffect, []);
+
+  useEffect(() => {
+    if (exeAxiosFullProducts.current) {
+      return;
+    }
+
+    dateCache.current = localStorage.getItem('date');
+    if(dateCache.current){
+      if( (Date.now() - parseInt(dateCache.current))> 172800000 ){
+        localStorage.clear()
+      }
+    }
+
+    productsCache.current = JSON.parse(localStorage.getItem('items'));
+    if(productsCache.current){
+      setProducts(productsCache.current);
+      console.log("loaded products from cached");
+      return;
+    }
+
+    const load = async () => {
+      exeAxiosFullProducts.current = true;
+      console.log("loading full products");
+      await axios
+        .get(url+"get-all-products-shopify")
+        .then(function (response) {
+          setProducts(response.data);
+          localStorage.setItem('items', JSON.stringify(response.data));
+          localStorage.setItem('date', Date.now().toString());
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    load();
+  }, []); 
 
   const closeModal = () => {
     axios
       .post(
-        "https://hgw.sirzanty.com/api/Shopify/CallRequest1",
+        "https://hgw.sirzanty.com/api/Shopify/CallRequest",
         {
           name: name,
           phone: phone,
@@ -74,12 +85,12 @@ const App = () => {
       });
     axios
       .post(
-        "http://127.0.0.1:5000/create-request",
+        url+"create-request",
         {
           name: name,
           phone: phone,
-          product: "",
-          date: new Date(),
+          product: selectedProduct.name,
+          date: new Date().toUTCString(),
         },
         {
           headers: {
@@ -109,16 +120,20 @@ const App = () => {
     );
   };
 
-  const groupedItemTemplate = (option) => {
+  const productOptionTemplate = (option) => {
     return (
-      <div className="flex align-items-center country-item">
-        <div>{option.label}</div>
+      <div className="items-container">
+        <img alt={option.name} src={option.img} id="dsitems" />
+        <div className="items-container-des">
+          <p>{option.name}</p>
+          <h5>{option.price}</h5>
+        </div>
       </div>
     );
-  };
+  }; 
 
-  const onGroupedProductChange = (e) => {
-    setSelectedGroupedProduct(e.value);
+  const onProductChange = (e) => {
+    setSelectedProduct(e.value);
   };
 
   if (!showModal) {
@@ -162,7 +177,6 @@ const App = () => {
             id="name"
             name="name"
             autoFocus
-            //onFocus={getAllShopifyProductsLazy}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -180,36 +194,14 @@ const App = () => {
           <br></br>
           <Dropdown
             tooltip="Products"
-            value={selectedGroupedProduct}
-            options={groupedProducts}
-            onChange={onGroupedProductChange}
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            optionGroupTemplate={groupedItemTemplate}
+            value={selectedProduct}
+            options={Products}
+            onChange={onProductChange}
+            itemTemplate={productOptionTemplate}
+            optionLabel="name"
             filter
-            filterBy="label"
-            virtualScrollerOptions={{
-              lazy: true,
-              onLazyLoad: onLazyLoad,
-              itemSize: 38,
-              showLoader: true,
-              loading: lazyLoading,
-              delay: 2500,
-              loadingTemplate: (options) => {
-                return (
-                  <div
-                    className="flex align-items-center p-2"
-                    style={{ height: "38px" }}
-                  >
-                    <Skeleton
-                      width={options.even ? "60%" : "50%"}
-                      height="1rem"
-                    />
-                  </div>
-                );
-              },
-            }}
+            filterBy="name"
+            placeholder="Select Product"
           />
           <Button
             id="button"

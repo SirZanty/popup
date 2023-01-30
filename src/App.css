@@ -142,15 +142,38 @@
 
 .p-dropdown-item{
   z-index: 100;
-  width: 600px;
+  width: 400px;
 }
 
 .p-dropdown-items{
   z-index: 100;
-  width: 350px;
+  width: 350px;  
 }
 
 .p-dropdown {
   width: 90%;
   border: 3px solid #215fd1 !important;
+}
+
+#dsitems{
+  width: 90px;
+  height: 90px;
+}
+
+.items-container{
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.items-container-des{
+  display: flex;
+  height: 100px;
+  padding-left: 5px;
+  flex-direction: column;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: small;
+  white-space:normal;
 }

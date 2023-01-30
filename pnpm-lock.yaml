@@ -6,7 +6,6 @@ specifiers:
   '@types/react-modal': ^3.13.1
   '@vitejs/plugin-react': ^2.2.0
   axios: ^1.2.0
-  primeicons: ^6.0.1
   primereact: ^8.7.3
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -15,8 +14,7 @@ specifiers:
 
 dependencies:
   axios: 1.2.0
-  primeicons: 6.0.1
-  primereact: 8.7.3_esim4yelhr35vesnk67vhutmai
+  primereact: 8.7.3_2zx2umvpluuhvlq44va5bta2da
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
 
@@ -862,11 +860,7 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /primeicons/6.0.1:
-    resolution: {integrity: sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA==}
-    dev: false
-
-  /primereact/8.7.3_esim4yelhr35vesnk67vhutmai:
+  /primereact/8.7.3_2zx2umvpluuhvlq44va5bta2da:
     resolution: {integrity: sha512-BjlIOOsVcUqX9edn7HewN/U28aUqREOvPP3fnpk7X6S7k5JTM570Dm7Z/TEPH1x/Mko1NL6iDaYWnkjKiBrtPQ==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18.0.0
@@ -879,7 +873,6 @@ packages:
     dependencies:
       '@types/react': 18.0.25
       '@types/react-transition-group': 4.4.5
-      primeicons: 6.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-transition-group: 4.4.5_biqbaboplfbrettd7655fr4n2y
