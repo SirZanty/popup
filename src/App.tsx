@@ -89,7 +89,7 @@ const App = () => {
         {
           name: name,
           phone: phone,
-          product: selectedProduct.name,
+          product: selectedProduct? selectedProduct.name:"No selected",
           date: new Date().toUTCString(),
         },
         {
