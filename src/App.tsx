@@ -13,8 +13,9 @@ const App = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [Products, setProducts] = useState(null);
   let exeAxiosFullProducts: MutableRefObject<boolean> = useRef(false);
-  let dateCache = useRef('');
+  let dateCache = useRef("");
   let productsCache = useRef(null);
+  //const url = "http://127.0.0.1:5000/";
   const url = "https://shobryl-api.sirzanty.com/";
 
   const onLoadEffect = () => {
@@ -30,15 +31,15 @@ const App = () => {
       return;
     }
 
-    dateCache.current = localStorage.getItem('date');
-    if(dateCache.current){
-      if( (Date.now() - parseInt(dateCache.current))> 172800000 ){
-        localStorage.clear()
+    dateCache.current = localStorage.getItem("date");
+    if (dateCache.current) {
+      if (Date.now() - parseInt(dateCache.current) > 172800000) {
+        localStorage.clear();
       }
     }
 
-    productsCache.current = JSON.parse(localStorage.getItem('items'));
-    if(productsCache.current){
+    productsCache.current = JSON.parse(localStorage.getItem("items"));
+    if (productsCache.current) {
       setProducts(productsCache.current);
       console.log("loaded products from cached");
       return;
@@ -48,11 +49,11 @@ const App = () => {
       exeAxiosFullProducts.current = true;
       console.log("loading full products");
       await axios
-        .get(url+"get-all-products-shopify")
+        .get(url + "get-all-products-shopify")
         .then(function (response) {
           setProducts(response.data);
-          localStorage.setItem('items', JSON.stringify(response.data));
-          localStorage.setItem('date', Date.now().toString());
+          localStorage.setItem("items", JSON.stringify(response.data));
+          localStorage.setItem("date", Date.now().toString());
         })
         .catch(function (error) {
           console.log(error);
@@ -60,10 +61,10 @@ const App = () => {
     };
 
     load();
-  }, []); 
+  }, []);
 
-  const closeModal = () => {
-    axios
+  const closeModal = async () => {
+    await axios
       .post(
         "https://hgw.sirzanty.com/api/Shopify/CallRequest",
         {
@@ -83,14 +84,19 @@ const App = () => {
       .catch(function (error) {
         console.log(error);
       });
-    axios
+
+    await axios.get("https://api.ipify.org?format=js")
+    .then((r) => {
+      console.log(r.data);
+      axios
       .post(
-        url+"create-request",
+        url + "create-request",
         {
           name: name,
           phone: phone,
-          product: selectedProduct? selectedProduct.name:"No selected",
+          product: selectedProduct ? selectedProduct.name : "No selected",
           date: new Date().toUTCString(),
+          ip: r.data
         },
         {
           headers: {
@@ -105,6 +111,7 @@ const App = () => {
       .catch(function (error) {
         console.log(error);
       });
+    });
     setModalStatus(false);
   };
 
@@ -130,7 +137,7 @@ const App = () => {
         </div>
       </div>
     );
-  }; 
+  };
 
   const onProductChange = (e) => {
     setSelectedProduct(e.value);
