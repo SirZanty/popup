@@ -19,6 +19,11 @@ const App = () => {
   const url = "https://shobryl-api.sirzanty.com/";
 
   const onLoadEffect = () => {
+    productsCache.current = JSON.parse(localStorage.getItem("items"));
+    if (productsCache.current) {
+      setModalStatus(true);
+      return;
+    }
     setTimeout(() => {
       setModalStatus(true);
     }, 15000);
